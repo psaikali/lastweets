@@ -14,7 +14,7 @@ use Lastweets\Functions;
  * Register our shiny Gutenblock
  */
 function register_gutenblock() {
-	$fields = apply_filters( 'lastweets_gutenblock_fields', [] );
+	$fields = apply_filters( 'lastweets/gutenblock_fields', [] );
 
 	if ( empty( $fields ) ) {
 		return;
@@ -57,7 +57,7 @@ function add_core_gutenblock_fields( $fields = [] ) {
 
 	return $fields;
 }
-add_filter( 'lastweets_gutenblock_fields', __NAMESPACE__ . '\\add_core_gutenblock_fields' );
+add_filter( 'lastweets/gutenblock_fields', __NAMESPACE__ . '\\add_core_gutenblock_fields', 10 );
 
 /**
  * Render our Gutenblock on the front-end

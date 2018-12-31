@@ -34,8 +34,9 @@ function display_latest_tweets( $account = 'psaikali', $amount = 1, $style = 'oe
 						$url = "https://twitter.com/{$tweet->user->screen_name}/status/{$tweet->id}";
 					}
 
+					do_action( 'lastweets/before_display_oembed', $url, $tweet );
 					echo $wp_embed->shortcode( [], $url );
-
+					do_action( 'lastweets/after_display_oembed', $url, $tweet );
 					break;
 
 				// Homemade widget.
@@ -46,7 +47,10 @@ function display_latest_tweets( $account = 'psaikali', $amount = 1, $style = 'oe
 						$tweet_object = $tweet;
 					}
 
+					do_action( 'lastweets/before_display_theme', $tweet_object );
 					display_tweet_with_custom_theme( $tweet_object );
+					do_action( 'lastweets/after_display_theme', $tweet_object );
+
 					break;
 			}
 		}

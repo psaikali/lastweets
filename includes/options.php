@@ -16,7 +16,7 @@ use Carbon_Fields\Field;
  * @return void
  */
 function options_initialize_admin_page() {
-	$tabs = apply_filters( 'lastweets_options_tabs', [] );
+	$tabs = apply_filters( 'lastweets/options_tabs', [] );
 
 	if ( empty( $tabs ) ) {
 		return;
@@ -32,7 +32,7 @@ function options_initialize_admin_page() {
 	foreach ( $tabs as $tab_slug => $tab_title ) {
 		$theme_options->add_tab(
 			esc_html( $tab_title ),
-			apply_filters( "lastweets_options_fields_tab_{$tab_slug}", [] )
+			apply_filters( "lastweets/options_fields_tab_{$tab_slug}", [] )
 		);
 	}
 }
@@ -50,7 +50,7 @@ function options_set_tabs( $tabs ) {
 		'theme' => __( 'Theme', 'lastweets' ),
 	];
 }
-add_filter( 'lastweets_options_tabs', __NAMESPACE__ . '\\options_set_tabs' );
+add_filter( 'lastweets/options_tabs', __NAMESPACE__ . '\\options_set_tabs' );
 
 /**
  * "General" option tab fields
@@ -68,7 +68,7 @@ function options_general_option_tab_fields() {
 
 	return $fields;
 }
-add_filter( 'lastweets_options_fields_tab_general', __NAMESPACE__ . '\\options_general_option_tab_fields', 10 );
+add_filter( 'lastweets/options_fields_tab_general', __NAMESPACE__ . '\\options_general_option_tab_fields', 10 );
 
 /**
  * "Theme" option tab fields
@@ -84,7 +84,7 @@ function options_theme_option_tab_fields() {
 
 	return $fields;
 }
-add_filter( 'lastweets_options_fields_tab_theme', __NAMESPACE__ . '\\options_theme_option_tab_fields', 10 );
+add_filter( 'lastweets/options_fields_tab_theme', __NAMESPACE__ . '\\options_theme_option_tab_fields', 10 );
 
 /**
  * Display support / doc content in the sidebar
