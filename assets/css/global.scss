@@ -1,0 +1,138 @@
+//==========================================================================
+//                                                                          
+//  ##   ##    ###    #####    ##    ###    #####   ##      #####   ####  
+//  ##   ##   ## ##   ##  ##   ##   ## ##   ##  ##  ##      ##     ##     
+//  ##   ##  ##   ##  #####    ##  ##   ##  #####   ##      #####   ###   
+//   ## ##   #######  ##  ##   ##  #######  ##  ##  ##      ##        ##  
+//    ###    ##   ##  ##   ##  ##  ##   ##  #####   ######  #####  ####   
+//                                                                          
+//==========================================================================
+$blue: #4777CD;
+.clearfix { &:after { content: ""; display: table; clear: both; } }
+
+//===================================================
+//                                                   
+//   ####  ######  ##    ##  ##      #####   ####  
+//  ##       ##     ##  ##   ##      ##     ##     
+//   ###     ##      ####    ##      #####   ###   
+//     ##    ##       ##     ##      ##        ##  
+//  ####     ##       ##     ######  #####  ####   
+//                                                   
+//===================================================
+div.traincomp-wrap {
+	header.admin-title {
+		position: relative;
+
+		h1 {
+			small {
+				display: block;
+				color: #888;
+				font-size:40%;
+				margin-bottom: .25em;
+				font-weight: bold;
+			}	
+		}
+
+		a.icon-link {
+			position: absolute;
+			right:0;
+			top:1rem;
+			z-index:900;
+
+			.dashicons {
+				position: relative;
+				top: -.125em;
+				opacity: .5;
+
+				@media screen and (max-width: 782px) {
+					font-size: 1.4rem;
+					margin-right: .5em;
+				}
+			}
+
+			span.txt {
+				@media screen and (max-width: 782px) {
+					display: none;
+				}
+			}
+
+			&:hover {
+				.dashicons {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	div.row {
+		@extend .clearfix;
+		
+		div.col {
+			float:left;
+
+			&.col1 {
+				width:37.5%;
+				margin-right: 2.5%;
+			}
+			
+			&.col2 {
+				width:57.5%;
+				margin-left: 2.5%;
+			}
+
+			@media screen and (max-width: 782px) {
+				&.col1, &.col2 {
+					width: 100%;
+					margin: 0;
+				}
+			}
+		}
+	}
+
+	form.form-create-comp {
+		background: #fff;
+		border: 1px solid #d7d7d7;
+		border-radius: 4px;
+		padding:1rem;
+
+		input, select {
+			width:100%;
+			margin-bottom: 1rem;
+		}
+
+		div.field {
+			&.footer {
+				text-align: right;
+
+				button.button {
+					padding: .325em 1.5em;
+					height: auto;
+					font-size: .9rem;
+				}
+			}
+		}
+	}
+
+	section.list-comps {
+		div.datepicker-inline {
+			div.datepicker {
+				width:100%;
+				
+				.datepicker--cell-day {
+					height:3.5rem;
+					font-size: 1.125rem;
+
+					&.has-comp {
+						background: $blue;
+						color:#fff;
+						font-weight: bold;
+
+						&:hover {
+							background: darken( $blue, 10% );
+						}
+					}
+				}
+			}
+		}
+	}
+}

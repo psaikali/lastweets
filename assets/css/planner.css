@@ -1,0 +1,422 @@
+.clearfix:after, div.ReactModalPortal div.traincomp-modal form div.fields:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+#layout-wrapper article.wagon-row div.cell:before, #layout-wrapper article.wagon-row div.group header ul li:after, div.ReactModalPortal div.traincomp-modal header.modal-title:after {
+  position: absolute;
+  content: "";
+  display: block; }
+
+#layout-wrapper header.timeslots-titles article.timeslot-title div.stats div.stats-bar div.percentage, #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info):before, #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info) button.button-add-group, #layout-wrapper article.wagon-row div.group:hover, #layout-wrapper article.wagon-row div.group:hover header h3, #layout-wrapper article.wagon-row:hover div.cell.wagon-info:hover button.link, div.ReactModalPortal div.traincomp-modal form .traincomp-button:hover, div.ReactModalPortal div.traincomp-modal form span.link:hover {
+  transition: .25s all ease-in-out; }
+
+#layout-wrapper article.wagon-row div.cell button.button-add-group, #layout-wrapper article.wagon-row div.group, #layout-wrapper article.wagon-row div.group header h3, div.ReactModalPortal div.traincomp-modal form .traincomp-button, div.ReactModalPortal div.traincomp-modal form span.link {
+  transition: .15s all ease-out; }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+#layout-wrapper div.message-box .dashicons.dashicons-update {
+  animation-name: spin;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; }
+
+#layout-wrapper {
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  margin-left: -40px;
+  margin-right: -40px;
+  margin-bottom: 6rem;
+  position: relative; }
+  #layout-wrapper p, #layout-wrapper h1, #layout-wrapper h2, #layout-wrapper h3, #layout-wrapper h4, #layout-wrapper h5, #layout-wrapper h6 {
+    margin: 0;
+    padding: 0; }
+  #layout-wrapper button, #layout-wrapper .link {
+    cursor: pointer; }
+  #layout-wrapper span.dashicons {
+    font-size: 1em;
+    height: 1em;
+    width: 1em;
+    vertical-align: middle; }
+  #layout-wrapper .cell {
+    float: left; }
+  #layout-wrapper.with-8-timeslots .cell {
+    width: 11.11111%; }
+  #layout-wrapper.with-7-timeslots .cell {
+    width: 12.5%; }
+  #layout-wrapper.with-6-timeslots .cell {
+    width: 14.28571%; }
+  #layout-wrapper.with-5-timeslots .cell {
+    width: 16.66667%; }
+  #layout-wrapper div.app-components.disabled {
+    opacity: .5;
+    cursor: disabled; }
+
+#layout-wrapper header.timeslots-titles article.timeslot-title.timeslot-empty-title > p {
+  border-left: none; }
+#layout-wrapper header.timeslots-titles article.timeslot-title > p {
+  text-align: center;
+  font-size: 1.2rem;
+  border-left: 1px dashed #d1d8e6; }
+#layout-wrapper header.timeslots-titles article.timeslot-title div.stats {
+  background: #d1d8e6;
+  border-left: 1px dashed #b0bcd4; }
+  #layout-wrapper header.timeslots-titles article.timeslot-title div.stats div.stats-bar {
+    width: 100%;
+    background: #fff; }
+    #layout-wrapper header.timeslots-titles article.timeslot-title div.stats div.stats-bar div.percentage {
+      background: #5EBD9C;
+      height: 4px; }
+      #layout-wrapper header.timeslots-titles article.timeslot-title div.stats div.stats-bar div.percentage.full-bar {
+        background: #F56262; }
+  #layout-wrapper header.timeslots-titles article.timeslot-title div.stats > p {
+    text-align: center;
+    font-weight: 700;
+    padding: .5em 0;
+    font-size: .7rem; }
+
+#layout-wrapper article.wagon-row {
+  background: #e5e9f1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  border-top: 1px solid #d1d8e6;
+  /**
+   * Single group
+   */
+  /**
+   * article.wagon-row
+   */ }
+  #layout-wrapper article.wagon-row div.cell {
+    padding: 1.2rem 0 0 0;
+    position: relative;
+    border-left: 1px solid #d1d8e6;
+    min-height: 5rem;
+    /**
+     * Cell hover
+     */ }
+    #layout-wrapper article.wagon-row div.cell.wagon-info {
+      padding: 0;
+      background: #fff;
+      text-align: right;
+      border-left: none; }
+      #layout-wrapper article.wagon-row div.cell.wagon-info h3 {
+        font-size: 1.1rem;
+        padding-top: .5em;
+        margin-right: .825rem;
+        font-weight: 300; }
+        #layout-wrapper article.wagon-row div.cell.wagon-info h3 small {
+          display: block;
+          font-weight: 700;
+          font-size: 60%;
+          text-transform: uppercase;
+          color: #b0b8c7; }
+      #layout-wrapper article.wagon-row div.cell.wagon-info button.link {
+        -webkit-appearance: none;
+        padding: 0;
+        margin: .25em .825rem 1em 0;
+        font-size: .675rem;
+        font-weight: bold;
+        border: none;
+        opacity: 0; }
+        #layout-wrapper article.wagon-row div.cell.wagon-info button.link:hover {
+          color: #F56262; }
+    #layout-wrapper article.wagon-row div.cell h6.wagon-live-capacity {
+      font-size: .6rem;
+      font-weight: 300;
+      position: absolute;
+      color: #777;
+      text-shadow: 0 1px 0px rgba(255, 255, 255, 0.5);
+      text-align: right;
+      top: .25em;
+      right: .5em; }
+    #layout-wrapper article.wagon-row div.cell button.button-add-group {
+      border: none;
+      margin: 0;
+      background: #F56262;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 50;
+      font-size: 1.4rem;
+      padding: 0 .5em;
+      opacity: 0; }
+    #layout-wrapper article.wagon-row div.cell:before {
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      z-index: 100;
+      pointer-events: none;
+      border: 4px solid #647087;
+      box-shadow: 0px 0px 0px 1px #F56262 inset;
+      opacity: 0; }
+    #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info) {
+      border-color: #647087; }
+      #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info):before {
+        opacity: 1; }
+      #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info) button.button-add-group {
+        opacity: .75; }
+        #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info) button.button-add-group:hover {
+          opacity: 1; }
+      #layout-wrapper article.wagon-row div.cell:hover:not(.wagon-info).timeslot-full:before {
+        box-shadow: none; }
+    #layout-wrapper article.wagon-row div.cell.drop-possible {
+      background-color: rgba(255, 255, 255, 0.5); }
+      #layout-wrapper article.wagon-row div.cell.drop-possible.drop-hovered {
+        background-color: #b0b8c7;
+        background-image: linear-gradient(140deg, #82ccb2 20%, #94d3bd 20%, #94d3bd 50%, #82ccb2 50%, #82ccb2 70%, #94d3bd 70%, #94d3bd 100%);
+        background-size: 38.89px 32.64px; }
+        #layout-wrapper article.wagon-row div.cell.drop-possible.drop-hovered h6.wagon-live-capacity {
+          opacity: 0; }
+    #layout-wrapper article.wagon-row div.cell.timeslot-full div.group {
+      background: #b0b8c7;
+      border-left-color: #8f9ab0; }
+  #layout-wrapper article.wagon-row div.group {
+    background: #5EBD9C;
+    color: #fff;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    border-left: 5px solid #43a583;
+    cursor: pointer;
+    position: relative; }
+    #layout-wrapper article.wagon-row div.group header {
+      padding: .625em .5em;
+      margin-right: 2rem; }
+      @media screen and (min-width: 1200px) {
+        #layout-wrapper article.wagon-row div.group header {
+          padding: .75em .625em; } }
+      #layout-wrapper article.wagon-row div.group header h3 {
+        color: #fff;
+        font-size: .8rem;
+        font-weight: normal;
+        margin: 0;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: .8; }
+        @media screen and (min-width: 1200px) {
+          #layout-wrapper article.wagon-row div.group header h3 {
+            font-size: .9rem; } }
+      #layout-wrapper article.wagon-row div.group header ul {
+        margin: .125em 0 0 0;
+        padding: 0;
+        list-style: none; }
+        #layout-wrapper article.wagon-row div.group header ul li {
+          display: inline-block;
+          margin: 0;
+          position: relative;
+          font-size: .6rem;
+          font-weight: bold;
+          background: #fff;
+          border-radius: 100%;
+          color: #444;
+          line-height: 1;
+          padding: .25em;
+          width: 1em;
+          height: 1em;
+          text-align: center;
+          margin-right: .5em; }
+          #layout-wrapper article.wagon-row div.group header ul li:after {
+            height: 0.3em;
+            background: rgba(255, 255, 255, 0.675);
+            left: 100%;
+            right: -.5em;
+            top: 50%;
+            margin-top: -0.15em; }
+          #layout-wrapper article.wagon-row div.group header ul li:last-child:after {
+            display: none; }
+    #layout-wrapper article.wagon-row div.group p.size {
+      position: absolute;
+      font-weight: 300;
+      margin: 0;
+      top: 50%;
+      margin-top: -.5em;
+      line-height: 1;
+      font-size: 1.4rem;
+      right: .375rem;
+      opacity: .5; }
+    #layout-wrapper article.wagon-row div.group.is-dragging {
+      cursor: move; }
+    #layout-wrapper article.wagon-row div.group:hover {
+      border-left-color: #358066; }
+      #layout-wrapper article.wagon-row div.group:hover header h3 {
+        opacity: 1; }
+  #layout-wrapper article.wagon-row:hover div.cell.wagon-info:hover button.link {
+    opacity: 1; }
+
+#layout-wrapper p.no-wagon {
+  text-align: center;
+  padding: 3rem 0;
+  background: #fff;
+  font-size: 1.2rem; }
+
+#layout-wrapper .composition-actions {
+  text-align: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid #d1d8e6;
+  border-bottom: 1px solid #d1d8e6;
+  background-image: linear-gradient(140deg, #f0f3f7 20%, #f5f7fa 20%, #f5f7fa 50%, #f0f3f7 50%, #f0f3f7 70%, #f5f7fa 70%, #f5f7fa 100%);
+  background-size: 20px 17px; }
+
+#layout-wrapper div.message-box {
+  position: absolute;
+  top: 1rem;
+  left: 2.5rem;
+  padding: .75rem 1rem .75rem 3rem;
+  background: #fff;
+  border-radius: .25rem;
+  border-left: 0.5rem solid #d1d8e6;
+  box-shadow: 5px 5px 20px -7px rgba(0, 0, 10, 0.25); }
+  #layout-wrapper div.message-box .dashicons {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    margin-top: -.5em;
+    font-size: 1.6em;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5); }
+  #layout-wrapper div.message-box p {
+    font-weight: bold;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5); }
+  #layout-wrapper div.message-box.is-success {
+    background: #79d5b5;
+    border-left-color: #49c59a; }
+    #layout-wrapper div.message-box.is-success p, #layout-wrapper div.message-box.is-success .dashicons {
+      color: #fff;
+      text-shadow: 0px 1px 0px #329d78; }
+  #layout-wrapper div.message-box.is-error {
+    background: #F56262;
+    border-left-color: #f12626; }
+    #layout-wrapper div.message-box.is-error p, #layout-wrapper div.message-box.is-error .dashicons {
+      color: #fff;
+      text-shadow: 0px 1px 0px #f01a1a; }
+
+div.ReactModalPortal {
+  position: fixed;
+  z-index: 9990;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  div.ReactModalPortal div.traincomp-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 10, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  div.ReactModalPortal div.traincomp-modal {
+    background: #fff;
+    min-width: 400px;
+    padding: 0 2rem 3rem;
+    border-radius: .6rem;
+    overflow: hidden;
+    box-shadow: 0px 12px 25px -5px rgba(0, 0, 15, 0.5); }
+    div.ReactModalPortal div.traincomp-modal header.modal-title {
+      background: #e5e9f1;
+      padding: 1.75rem 2rem;
+      margin-left: -2rem;
+      margin-right: -2rem;
+      margin-bottom: 2rem;
+      position: relative; }
+      div.ReactModalPortal div.traincomp-modal header.modal-title:after {
+        bottom: 0;
+        left: 2rem;
+        height: 6px;
+        margin-bottom: -3px;
+        width: 3rem;
+        background: #4777CD;
+        border-radius: .125rem; }
+      div.ReactModalPortal div.traincomp-modal header.modal-title h6 {
+        font-size: 1rem;
+        margin: 0 0 .325em;
+        line-height: 1;
+        font-weight: bold;
+        color: #929db2; }
+      div.ReactModalPortal div.traincomp-modal header.modal-title h2 {
+        font-size: 2rem;
+        margin: 0;
+        line-height: 1;
+        font-weight: 300; }
+        div.ReactModalPortal div.traincomp-modal header.modal-title h2 small {
+          font-size: 50%;
+          opacity: .8; }
+      div.ReactModalPortal div.traincomp-modal header.modal-title p {
+        font-style: italic;
+        margin: .5em 0 0 0;
+        font-size: .8rem;
+        opacity: .6; }
+    div.ReactModalPortal div.traincomp-modal form p.error {
+      padding: .25em .5em;
+      border-radius: .25em;
+      margin-top: 0;
+      color: #cb0d0d; }
+    div.ReactModalPortal div.traincomp-modal form input, div.ReactModalPortal div.traincomp-modal form select, div.ReactModalPortal div.traincomp-modal form button {
+      width: 100%;
+      cursor: pointer; }
+    div.ReactModalPortal div.traincomp-modal form label {
+      font-size: .7rem; }
+    div.ReactModalPortal div.traincomp-modal form legend {
+      font-weight: bold;
+      padding-top: 2rem;
+      font-size: 1rem;
+      margin-bottom: .25em; }
+    div.ReactModalPortal div.traincomp-modal form fieldset.duplicate legend {
+      padding-top: 0; }
+    div.ReactModalPortal div.traincomp-modal form div.fields {
+      margin-bottom: 1rem; }
+      div.ReactModalPortal div.traincomp-modal form div.fields div.field.name {
+        float: left;
+        width: 75%; }
+      div.ReactModalPortal div.traincomp-modal form div.fields div.field.size {
+        float: right;
+        width: 20%; }
+      div.ReactModalPortal div.traincomp-modal form div.fields div.field.phone {
+        float: left;
+        width: 47.5%; }
+      div.ReactModalPortal div.traincomp-modal form div.fields div.field.email {
+        float: right;
+        width: 47.5%; }
+      div.ReactModalPortal div.traincomp-modal form div.fields div.field.stop {
+        margin-bottom: .325rem; }
+    div.ReactModalPortal div.traincomp-modal form .traincomp-button {
+      background: #F56262;
+      color: #fff;
+      -webkit-appearance: none;
+      border: 2px solid #F56262;
+      padding: .75em 0;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: .25em;
+      cursor: pointer; }
+      div.ReactModalPortal div.traincomp-modal form .traincomp-button .dashicons {
+        opacity: .8;
+        display: inline-block;
+        margin-right: .25em; }
+      div.ReactModalPortal div.traincomp-modal form .traincomp-button:hover {
+        background: #fff;
+        color: #F56262; }
+        div.ReactModalPortal div.traincomp-modal form .traincomp-button:hover .dashicons {
+          opacity: 1; }
+    div.ReactModalPortal div.traincomp-modal form div.delete-group-link {
+      text-align: center;
+      margin-top: 2rem;
+      text-align: center;
+      cursor: pointer; }
+    div.ReactModalPortal div.traincomp-modal form span.link {
+      opacity: .5; }
+      div.ReactModalPortal div.traincomp-modal form span.link:hover {
+        opacity: 1;
+        color: #F56262; }

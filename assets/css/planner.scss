@@ -1,0 +1,700 @@
+//======================================
+//                                      
+//  ##   ##    ###    #####     ####  
+//  ##   ##   ## ##   ##  ##   ##     
+//  ##   ##  ##   ##  #####     ###   
+//   ## ##   #######  ##  ##      ##  
+//    ###    ##   ##  ##   ##  ####   
+//                                      
+//======================================
+$font: 'Roboto', 'Helvetica Neue', sans-serif;
+$blue: #4777CD;
+$green: #5EBD9C;
+$gray: desaturate( darken( #f2f4f8, 22.5% ), 12.5% );
+$red: #F56262;
+$bg: darken( #f2f4f8, 4% );
+$border: darken( $bg, 6% );
+
+.clearfix { &:after { content: ""; display: table; clear: both; } }
+%pseudo { position: absolute; content: ""; display: block; }
+%trans_in { transition: .25s all ease-in-out; }
+%trans_out { transition: .15s all ease-out; }
+@keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+%spin { animation-name: spin; animation-duration: 3s; animation-iteration-count: infinite; animation-timing-function: linear; }
+
+//================================================================
+//                                                                
+//   ####   #####   ###    ###  ###    ###   #####   ##     ##  
+//  ##     ##   ##  ## #  # ##  ## #  # ##  ##   ##  ####   ##  
+//  ##     ##   ##  ##  ##  ##  ##  ##  ##  ##   ##  ##  ## ##  
+//  ##     ##   ##  ##      ##  ##      ##  ##   ##  ##    ###  
+//   ####   #####   ##      ##  ##      ##   #####   ##     ##  
+//                                                                
+//================================================================
+#layout-wrapper {
+	font-family: $font;
+	font-weight: 300;
+	margin-left: -40px;
+	margin-right: -40px;
+	margin-bottom: 6rem;
+	position: relative;
+	
+	// Reset.
+	p, h1, h2, h3, h4, h5, h6 {
+		margin:0;
+		padding:0;
+	}
+
+	button, .link {
+		cursor: pointer;
+	}
+
+	span.dashicons {
+		font-size: 1em;
+		height:1em;
+		width:1em;
+		vertical-align: middle;
+	}
+
+	.cell {
+		float:left;
+	}
+
+	&.with-8-timeslots {
+		.cell {
+			width: 100/9*1%;
+		}
+	}
+
+	&.with-7-timeslots {
+		.cell {
+			width: 100/8*1%;
+		}
+	}
+
+	&.with-6-timeslots {
+		.cell {
+			width: 100/7*1%;
+		}
+	}
+
+	&.with-5-timeslots {
+		.cell {
+			width: 100/6*1%;
+		}
+	}
+
+	div.app-components {
+		&.disabled {
+			opacity: .5;
+			cursor: disabled;
+		}		
+	}
+}
+
+//=====================================================
+//                                                     
+//  ##   ##  #####    ###    ####    #####  #####    
+//  ##   ##  ##      ## ##   ##  ##  ##     ##  ##   
+//  #######  #####  ##   ##  ##  ##  #####  #####    
+//  ##   ##  ##     #######  ##  ##  ##     ##  ##   
+//  ##   ##  #####  ##   ##  ####    #####  ##   ##  
+//                                                     
+//=====================================================
+#layout-wrapper header.timeslots-titles {
+	article.timeslot-title {
+		&.timeslot-empty-title {
+			> p {
+				border-left:none;
+			}
+		}
+
+		> p {
+			text-align: center;
+			font-size: 1.2rem;
+			border-left:1px dashed $border;
+		}
+
+		div.stats {
+			background: $border;
+			border-left:1px dashed darken( $border, 10% );
+
+			div.stats-bar {
+				width:100%;
+				background: #fff;
+				
+				div.percentage {
+					@extend %trans_in;
+					background: $green;
+					height:4px;
+
+					&.full-bar {
+						background: $red;
+					}
+				}
+			}
+
+			> p {
+				text-align: center;
+				font-weight: 700;
+				padding:.5em 0;
+				font-size: .7rem;
+			}
+		}
+	}
+}
+
+//======================================================
+//                                                      
+//  ##      ##    ###     ####     #####   ##     ##  
+//  ##      ##   ## ##   ##       ##   ##  ####   ##  
+//  ##  ##  ##  ##   ##  ##  ###  ##   ##  ##  ## ##  
+//  ##  ##  ##  #######  ##   ##  ##   ##  ##    ###  
+//   ###  ###   ##   ##   ####     #####   ##     ##  
+//                                                      
+//======================================================
+#layout-wrapper article.wagon-row {
+	background: $bg;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	border-top: 1px solid $border;
+
+	div.cell {
+		$b: desaturate( darken($border, 40%), 15% );
+		padding: 1.2rem 0 0 0;
+		position: relative;
+		border-left:1px solid $border;
+		min-height: 5rem;
+
+		&.wagon-info {
+			padding:0;
+			background: #fff;
+			text-align: right;
+			border-left: none;
+
+			h3 {
+				font-size: 1.1rem;
+				padding-top:.5em;
+				margin-right: .825rem;
+				font-weight: 300;
+
+				small {
+					display: block;
+					font-weight: 700;
+					font-size: 60%;
+					text-transform: uppercase;
+					color:$gray;
+				}
+			}
+
+			button.link {
+				-webkit-appearance: none;
+				padding:0;
+				margin:.25em .825rem 1em 0;
+				font-size: .675rem;
+				font-weight: bold;
+				border:none;
+				opacity:0;
+				
+				&:hover {
+					color: $red;
+				}
+			}
+		}
+
+		h6.wagon-live-capacity {
+			font-size: .6rem;
+			font-weight: 300;
+			position: absolute;
+			color: #777;
+			text-shadow: 0 1px 0px rgba( #fff, .5);
+			text-align: right;
+			top:.25em;
+			right:.5em;
+		}
+
+		button.button-add-group {
+			border:none;
+			margin:0;
+			background: $red;
+			color:#fff;
+			position: absolute;
+			top:0;
+			bottom:0;
+			right:0;
+			z-index:50;
+			font-size: 1.4rem;
+			padding:0 .5em;
+			opacity:0;
+			@extend %trans_out;
+		}
+
+		&:before {
+			$o: 4px;
+			@extend %pseudo;
+			top:-$o;
+			left:-$o;
+			right:-$o;
+			bottom:-$o;
+			z-index:100;
+			pointer-events: none;
+			border: $o solid $b;
+			box-shadow: 0px 0px 0px 1px $red inset;
+			opacity:0;
+		}
+
+		/**
+		 * Cell hover
+		 */
+		&:hover:not(.wagon-info) {
+			border-color:$b;
+
+			&:before {
+				opacity:1;
+				@extend %trans_in;
+			}
+
+			button.button-add-group {
+				opacity: .75;
+				@extend %trans_in;
+
+				&:hover {
+					opacity:1;
+				}
+			}
+
+			&.timeslot-full {
+				&:before {
+					box-shadow: none;
+				}
+			}
+		}
+
+		&.drop-possible {
+			background-color: rgba( #fff, .5);
+			
+
+			&.drop-hovered {
+				$stripe1: lighten( $green, 10%);
+				$stripe2: lighten( $green, 15%);
+				background-color: $gray;
+				background-image: linear-gradient(140deg, $stripe1 20%, $stripe2 20%, $stripe2 50%, $stripe1 50%, $stripe1 70%, $stripe2 70%, $stripe2 100%);
+				background-size: 38.89px 32.64px;
+
+				h6.wagon-live-capacity {
+					opacity:0;
+				}
+			}
+		}
+
+		&.timeslot-full {
+			div.group {
+				background:$gray;
+				border-left-color: darken($gray, 11%);
+			}
+		}
+	}
+
+	/**
+	 * Single group
+	 */
+	div.group {
+		background: $green;
+		color:#fff;
+		margin-left:3px;
+		margin-right:3px;
+		margin-bottom:3px;
+		border-left: 5px solid darken($green, 10%);
+		cursor: pointer;
+		position: relative;
+		@extend %trans_out;
+
+		header {
+			padding:.625em .5em;
+			margin-right: 2rem;
+
+			@media screen and (min-width: 1200px) {
+				padding:.75em .625em;
+			}
+
+			h3 {
+				color:#fff;
+				font-size: .8rem;
+				font-weight: normal;
+				margin:0;
+				line-height: 1;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				opacity: .8;
+				@extend %trans_out;
+
+				@media screen and (min-width: 1200px) {
+					font-size: .9rem;
+				}
+			}
+
+			ul {
+				margin:.125em 0 0 0;
+				padding:0;
+				list-style: none;
+
+				li {
+					display: inline-block;
+					margin:0;
+					position: relative;
+					font-size: .6rem;
+					font-weight: bold;
+					background: #fff;
+					border-radius: 100%;
+					color:#444;
+					line-height: 1;
+					padding:.25em;
+					width:1em;
+					height:1em;
+					text-align: center;
+					margin-right: .5em;
+
+					&:after {
+						$h: .3em;
+						@extend %pseudo;
+						height:$h;
+						background: rgba( #fff, .675);
+						left:100%;
+						right:-.5em;
+						top:50%;
+						margin-top: -$h/2;
+					}
+
+					&:last-child {
+						&:after {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+
+		p.size {
+			position: absolute;
+			font-weight: 300;
+			margin:0;
+			top:50%;
+			margin-top: -.5em;
+			line-height: 1;
+			font-size: 1.4rem;
+			right:.375rem;
+			opacity:.5;
+		}
+
+		&.is-dragging {
+			cursor: move;
+		}
+
+		&:hover {
+			border-left-color: darken($green, 20%);
+			@extend %trans_in;
+
+			header {
+				h3 {
+					@extend %trans_in;
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	/**
+	 * article.wagon-row
+	 */
+	&:hover {
+		div.cell.wagon-info {
+			&:hover button.link {
+				opacity: 1;
+				@extend %trans_in;
+			}
+		}
+	}
+}
+
+#layout-wrapper p.no-wagon {
+	text-align: center;
+	padding:3rem 0;
+	background: #fff;
+	//font-weight: bold;
+	font-size: 1.2rem;
+}
+
+//=====================================================
+//                                                     
+//  #####   #####    #####   ######  #####  #####    
+//  ##     ##   ##  ##   ##    ##    ##     ##  ##   
+//  #####  ##   ##  ##   ##    ##    #####  #####    
+//  ##     ##   ##  ##   ##    ##    ##     ##  ##   
+//  ##      #####    #####     ##    #####  ##   ##  
+//                                                     
+//=====================================================
+#layout-wrapper .composition-actions {
+	text-align: center;
+	padding:1.5rem 0;
+	border-top:1px solid $border;
+	border-bottom:1px solid $border;
+	$stripe1: lighten( $bg, 3.5%);
+	$stripe2: lighten( $bg, 5%);
+	background-image: linear-gradient(140deg, $stripe1 20%, $stripe2 20%, $stripe2 50%, $stripe1 50%, $stripe1 70%, $stripe2 70%, $stripe2 100%);
+	background-size: 20px 17px;
+}
+
+//=====================================================================
+//                                                                     
+//  ###    ###  #####   ####   ####    ###     ####    #####   ####  
+//  ## #  # ##  ##     ##     ##      ## ##   ##       ##     ##     
+//  ##  ##  ##  #####   ###    ###   ##   ##  ##  ###  #####   ###   
+//  ##      ##  ##        ##     ##  #######  ##   ##  ##        ##  
+//  ##      ##  #####  ####   ####   ##   ##   ####    #####  ####   
+//                                                                     
+//=====================================================================
+#layout-wrapper div.message-box {
+	position: absolute;
+	top:1rem;
+	left:2.5rem;
+	padding:.75rem 1rem .75rem 3rem;
+	background: #fff;
+	border-radius: .25rem;
+	border-left:.5rem solid $border;
+	box-shadow: 5px 5px 20px -7px rgba(0,0,10,.25);
+
+	.dashicons {
+		position: absolute;
+		left:1rem;
+		top:50%;
+		margin-top: -.5em;
+		font-size: 1.6em;
+		text-shadow: 0px 1px 0px rgba(#fff, .5);
+
+		&.dashicons-update {
+			@extend %spin;
+		}
+	}
+
+	p {
+		font-weight: bold;
+		text-shadow: 0px 1px 0px rgba(#fff, .5);
+	}
+
+	&.is-success {
+		$green: saturate( lighten( $green, 10% ), 10% );
+		background: $green;
+		border-left-color: darken($green, 12.5%);
+
+		p, .dashicons {
+			color:#fff;
+			text-shadow: 0px 1px 0px darken($green, 25%);
+		}
+	}
+
+	&.is-error {
+		$red: $red;
+		background: $red;
+		border-left-color: darken($red, 12.5%);
+
+		p, .dashicons {
+			color:#fff;
+			text-shadow: 0px 1px 0px darken($red, 15%);
+		}
+	}
+}
+
+//=========================================================
+//                                                         
+//  ###    ###   #####   ####      ###    ##       ####  
+//  ## #  # ##  ##   ##  ##  ##   ## ##   ##      ##     
+//  ##  ##  ##  ##   ##  ##  ##  ##   ##  ##       ###   
+//  ##      ##  ##   ##  ##  ##  #######  ##         ##  
+//  ##      ##   #####   ####    ##   ##  ######  ####   
+//                                                         
+//=========================================================
+div.ReactModalPortal {
+	position: fixed;
+	z-index:9990;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	
+	div.traincomp-modal-overlay {
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		background: rgba( 0, 0, 10, .5 );
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	div.traincomp-modal {
+		background: #fff;
+		min-width: 400px;
+		padding:0 2rem 3rem;
+		border-radius: .6rem;
+		overflow: hidden;
+		box-shadow: 0px 12px 25px -5px rgba(0,0,15, .5);
+
+		header.modal-title {
+			background: $bg;
+			padding:1.75rem 2rem;
+			margin-left: -2rem;
+			margin-right: -2rem;
+			margin-bottom: 2rem;
+			position: relative;
+
+			&:after {
+				$h: 6px;
+				@extend %pseudo;
+				bottom:0;
+				left:2rem;
+				height:$h;
+				margin-bottom:-$h/2;
+				width: 3rem;
+				background: $blue;
+				border-radius:.125rem;
+			}
+
+			h6 {
+				font-size: 1rem;
+				margin:0 0 .325em;
+				line-height: 1;
+				font-weight: bold;
+				color:darken( $gray, 10% );
+			}
+
+			h2 {
+				font-size: 2rem;
+				margin:0;
+				line-height: 1;
+				font-weight: 300;
+
+				small {
+					font-size: 50%;
+					opacity: .8;
+				}
+			}
+
+			p {
+				font-style: italic;
+				margin:.5em 0 0 0;
+				font-size: .8rem;
+				opacity: .6;
+			}
+		}
+
+		form {
+			p.error {
+				padding:.25em .5em;
+				border-radius: .25em;
+				margin-top: 0;
+				color: darken( $red, 25% );
+			}
+
+			input, select, button {
+				width:100%;
+				cursor: pointer;
+			}
+
+			label {
+				font-size: .7rem;
+			}
+
+			legend {
+				font-weight: bold;
+				padding-top: 2rem;
+				font-size: 1rem;
+				margin-bottom: .25em;
+			}
+
+			fieldset.duplicate legend {
+				padding-top: 0;
+			}
+
+			div.fields {
+				margin-bottom: 1rem;
+				@extend .clearfix;
+
+				div.field.name {
+					float:left;
+					width:75%;
+				}
+
+				div.field.size {
+					float:right;
+					width:20%;
+				}
+				
+				div.field.phone {
+					float:left;
+					width:47.5%;
+				}
+
+				div.field.email {
+					float:right;
+					width:47.5%;
+				}
+
+				div.field.stop {
+					margin-bottom: .325rem;
+				}
+			}
+
+			.traincomp-button {
+				background: $red;
+				color:#fff;
+				-webkit-appearance: none;
+				border:2px solid $red;
+				padding: .75em 0;
+				font-size: 1rem;
+				font-weight: bold;
+				border-radius: .25em;
+				cursor: pointer;
+				@extend %trans_out;
+
+				.dashicons {
+					opacity: .8;
+					display: inline-block;
+					margin-right: .25em;
+				}
+
+				&:hover {
+					background: #fff;
+					color: $red;
+					@extend %trans_in;
+
+					.dashicons {
+						opacity: 1;
+					}
+				}
+			}
+
+			div.delete-group-link {
+				text-align: center;
+				margin-top: 2rem;
+				text-align: center;
+				cursor: pointer;
+			}
+
+			span.link {
+				opacity:.5;
+				@extend %trans_out;
+
+				&:hover {
+					opacity: 1;
+					color:$red;
+					@extend %trans_in;
+				}
+			}
+		}
+	}
+}
