@@ -35,15 +35,14 @@ function get_latest_tweets( $account = 'psaikali', $amount = 1, $retweets = fals
 				'consumer_secret'           => Options\get( 'lastweets_consumer_secret' ),
 			];
 
-			$url    = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-			$params = [
-				'count'           => $retweets ? $amount : ( $amount * 5 ),
-				'screen_name'     => $account,
-				'exclude_replies' => 'true',
-				'tweet_mode'      => 'extended',
-				'include_rts'     => $retweets,
-			];
-			$params = '?' . http_build_query( $params );
+			$params = "?count={$amount}&result_type=recent&tweet_mode=extended&include_rts=false&q=from:{$account}";
+
+			if ( ! $retweets ) {
+				$params .= ' AND -filter:retweets AND -filter:replies';
+				$params .= '&exclude_replies=true';
+			}
+
+			$url = 'https://api.twitter.com/1.1/search/tweets.json';
 
 			try {
 				$twitter = new \TwitterAPIExchange( $settings );
@@ -52,11 +51,13 @@ function get_latest_tweets( $account = 'psaikali', $amount = 1, $retweets = fals
 				return null;
 			}
 
-			if ( isset( $tweets->error ) ) {
+			if ( isset( $tweets->error ) || isset( $tweets->errors ) || ! isset( $tweets->statuses ) || empty( $tweets->statuses ) ) {
 				return null;
 			}
 
-			set_transient( $transient_name, array_slice( $tweets, 0, $amount ), (int) Options\get( 'lastweets_fetch_every' ) * MINUTE_IN_SECONDS );
+			$tweets = array_slice( $tweets->statuses, 0, $amount );
+
+			set_transient( $transient_name, $tweets, (int) Options\get( 'lastweets_fetch_every' ) * MINUTE_IN_SECONDS );
 		}
 
 		if ( is_array( $tweets ) ) {
