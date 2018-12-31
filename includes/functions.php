@@ -26,13 +26,16 @@ function display_latest_tweets( $account = 'psaikali', $amount = 1, $style = 'oe
 				// Oembed widget.
 				case 'oembed':
 				default:
+					global $wp_embed;
+
 					if ( isset( $tweet->retweeted_status->id ) ) {
 						$url = "https://twitter.com/{$tweet->retweeted_status->user->screen_name}/status/{$tweet->retweeted_status->id}";
 					} else {
 						$url = "https://twitter.com/{$tweet->user->screen_name}/status/{$tweet->id}";
 					}
 
-					echo \wp_oembed_get( $url );
+					echo $wp_embed->shortcode( [], $url );
+
 					break;
 
 				// Homemade widget.
@@ -64,6 +67,7 @@ function display_tweet_with_custom_theme( $tweet ) {
 	// Find our template file in theme/child-theme or fallback to plugin template file.
 	$template_file_path = locate_template( $theme_template_file_path, false );
 	$template_file_path = ( ! empty( $template_file_path ) ) ? $template_file_path : $plugin_template_file_path;
+	$template_file_path = apply_filters( 'lastweets/custom_theme_path', $template_file_path );
 
 	if ( ! file_exists( $template_file_path ) ) {
 		return;
