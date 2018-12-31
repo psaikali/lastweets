@@ -80,6 +80,7 @@ function options_theme_option_tab_fields() {
 
 	// Load CSS styles?
 	$fields[] = Field::make( 'checkbox', 'lastweets_load_css', __( 'Load plugin CSS styles to enhance tweets design.', 'lastweets' ) )->set_option_value( 'yes' )->set_default_value( 'yes' );
+	$fields[] = Field::make( 'text', 'lastweets_fetch_every', __( 'Duration (in minutes) of tweets data cache', 'lastweets' ) )->set_required()->set_default_value( 30 );
 
 	return $fields;
 }
@@ -95,3 +96,13 @@ function display_content_after_sidebar() {
 	<?php
 }
 //add_action( 'carbon_fields_container_lastweets_after_sidebar', __NAMESPACE__ . '\\display_content_after_sidebar' );
+
+/**
+ * Get option value.
+ *
+ * @param string $option_name
+ * @return mixed Option value
+ */
+function get( $option_name ) {
+	return \carbon_get_theme_option( $option_name );
+}

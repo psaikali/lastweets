@@ -6,26 +6,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Lastweets\Options;
+
 /**
  * Get latest tweets of an account
  *
- * @param string $username The twitter username
+ * @param string $account The twitter username
+ * @param int $amount Number of tweets to retrieve
  * @return mixed Array of tweets or null
  */
-function get_latest_tweet( $username = 'psaikali', $amount = 1 ) {
-	if ( defined( 'TWITTER_OAUTH_ACCESS_TOKEN' ) && defined( 'TWITTER_OAUTH_ACCESS_TOKEN_SECRET' ) && defined( 'TWITTER_CONSUMER_KEY' ) && defined( 'TWITTER_CONSUMER_SECRET' ) ) {
-		$transient_name = 'innov_latest_tweet' . $username;
+function get_latest_tweets( $account = 'psaikali', $amount = 1, $retweets = false ) {
+	$amount  = (int) $amount;
+	$account = ltrim( (string) $account, '@' );
+
+	if ( strlen( $account ) === 0 || $amount === 0 ) {
+		return null;
+	}
+
+	if ( api_keys_are_defined() ) {
+		$transient_key  = "lastweets_data_{$account}_{$amount}_" . (int) $retweets;
+		$transient_name = sanitize_key( $transient_key );
 
 		if ( false === ( $tweets = get_transient( $transient_name ) ) ) {
 			$settings = [
-				'oauth_access_token'        => TWITTER_OAUTH_ACCESS_TOKEN,
-				'oauth_access_token_secret' => TWITTER_OAUTH_ACCESS_TOKEN_SECRET,
-				'consumer_key'              => TWITTER_CONSUMER_KEY,
-				'consumer_secret'           => TWITTER_CONSUMER_SECRET,
+				'oauth_access_token'        => Options\get( 'lastweets_access_token' ),
+				'oauth_access_token_secret' => Options\get( 'lastweets_access_token_secret' ),
+				'consumer_key'              => Options\get( 'lastweets_consumer_key' ),
+				'consumer_secret'           => Options\get( 'lastweets_consumer_secret' ),
 			];
 
 			$url    = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-			$params = "?count=1&exclude_replies=true&tweet_mode=extended&screen_name={$username}";
+			$params = [
+				'count'           => $retweets ? $amount : ( $amount * 5 ),
+				'screen_name'     => $account,
+				'exclude_replies' => 'true',
+				'tweet_mode'      => 'extended',
+				'include_rts'     => $retweets,
+			];
+			$params = '?' . http_build_query( $params );
 
 			try {
 				$twitter = new \TwitterAPIExchange( $settings );
@@ -34,7 +52,11 @@ function get_latest_tweet( $username = 'psaikali', $amount = 1 ) {
 				return null;
 			}
 
-			set_transient( $transient_name, $tweets, 30 * MINUTE_IN_SECONDS );
+			if ( isset( $tweets->error ) ) {
+				return null;
+			}
+
+			set_transient( $transient_name, array_slice( $tweets, 0, $amount ), (int) Options\get( 'lastweets_fetch_every' ) * MINUTE_IN_SECONDS );
 		}
 
 		if ( is_array( $tweets ) ) {
@@ -43,4 +65,18 @@ function get_latest_tweet( $username = 'psaikali', $amount = 1 ) {
 	}
 
 	return null;
+}
+
+/**
+ * Check if API keys are defined.
+ *
+ * @return boolean
+ */
+function api_keys_are_defined() {
+	return (
+		strlen( trim( Options\get( 'lastweets_consumer_key' ) ) ) > 0 &&
+		strlen( trim( Options\get( 'lastweets_consumer_secret' ) ) ) > 0 &&
+		strlen( trim( Options\get( 'lastweets_access_token' ) ) ) > 0 &&
+		strlen( trim( Options\get( 'lastweets_access_token_secret' ) ) ) > 0
+	);
 }

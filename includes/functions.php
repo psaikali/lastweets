@@ -9,76 +9,107 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Lastweets\Api;
 
 /**
- * Display latest tweet
+ * Display latest tweets
+ *
+ * @param string $account The twitter account to fetch tweets from.
+ * @param integer $amount The number of tweets to display.
+ * @param string $style The style of the tweets (oembed widget or custom display).
+ * @param boolean $retweets Whether to display original tweets only, or include retweets too.
+ * @return void
  */
-function display_latest_tweet( $username = 'psaikali', $amount = 1, $oembed = true ) {
-	$tweet = Api\get_latest_tweet( $username );
+function display_latest_tweets( $account = 'psaikali', $amount = 1, $style = 'oembed', $retweets = false ) {
+	$tweets = Api\get_latest_tweets( $account, $amount, $retweets );
 
-	if ( $tweet ) {
-		// Oembed widget.
-		if ( $oembed ) {
-			if ( isset( $tweet->retweeted_status->id ) ) {
-				$url = "https://twitter.com/{$tweet->retweeted_status->user->screen_name}/status/{$tweet->retweeted_status->id}";
-			} else {
-				$url = "https://twitter.com/{$tweet->user->screen_name}/status/{$tweet->id}";
+	if ( ! empty( $tweets ) ) {
+		foreach ( $tweets as $tweet ) {
+			switch ( $style ) {
+				// Oembed widget.
+				case 'oembed':
+				default:
+					if ( isset( $tweet->retweeted_status->id ) ) {
+						$url = "https://twitter.com/{$tweet->retweeted_status->user->screen_name}/status/{$tweet->retweeted_status->id}";
+					} else {
+						$url = "https://twitter.com/{$tweet->user->screen_name}/status/{$tweet->id}";
+					}
+
+					echo \wp_oembed_get( $url );
+					break;
+
+				// Homemade widget.
+				case 'theme':
+					if ( isset( $tweet->retweeted_status->id ) ) {
+						$tweet_object = $tweet->retweeted_status;
+					} else {
+						$tweet_object = $tweet;
+					}
+
+					display_tweet_with_custom_theme( $tweet_object );
+					break;
 			}
-
-			echo \wp_oembed_get( $url );
-		} else {
-			// Homemade widget.
-			if ( isset( $tweet->retweeted_status->id ) ) {
-				$tweet_object = $tweet->retweeted_status;
-			} else {
-				$tweet_object = $tweet;
-			}
-
-			output_custom_tweet( (object) [
-				'id'              => $tweet_object->id,
-				'url'             => "https://twitter.com/{$tweet_object->user->screen_name}/status/{$tweet_object->id}",
-				'date'            => strtotime( $tweet_object->created_at ),
-				'text'            => $tweet_object->full_text,
-				'retweets_count'  => $tweet_object->retweet_count,
-				'favorites_count' => $tweet_object->favorite_count,
-				'user'            => (object) [
-					'name'        => $tweet_object->user->name,
-					'screen_name' => $tweet_object->user->screen_name,
-					'avatar'      => $tweet_object->user->profile_image_url_https,
-					'url'         => "https://twitter.com/{$tweet_object->user->screen_name}",
-				],
-			] );
 		}
 	}
 }
 
 /**
- * Custom display of a tweet
+ * Display tweet with custom theme
+ *
+ * @param object $tweet Tweet data
+ * @return void
  */
-function output_custom_tweet( $tweet ) {
-	$tweet->text = preg_replace( '/#+([a-zA-ZÀ-ÖØ-öø-ÿ0-9_]+)/', '<a target="_blank" rel="nofollow" href="https://twitter.com/search?q=$1">$0</a>', $tweet->text );
-	$tweet->text = preg_replace( '/@+([a-zA-Z0-9_]+)/', '<a target="_blank" rel="nofollow" href="https://twitter.com/$1">$0</a>', $tweet->text );
-	?>
-	<div class="tweet">
-		<header>
-			<a target="_blank" rel="nofollow" href="<?php echo esc_url( $tweet->user->url ); ?>">
-				<img src="<?php echo esc_url( $tweet->user->avatar ); ?>" alt="<?php echo esc_attr( $tweet->user->name ); ?>" />
-				<p>
-					<?php echo $tweet->user->name; ?>
-					<small><?php echo sprintf( '@%1$s', $tweet->user->screen_name ); ?></small>
-					<time><?php echo date_i18n( get_option( 'date_format' ), $tweet->date ); ?></time>
-				</p>
-			</a>
-		</header>
+function display_tweet_with_custom_theme( $tweet ) {
+	$file_name                 = 'single_tweet.php';
+	$theme_template_file_path  = "templates/lastweets-{$file_name}";
+	$plugin_template_file_path = LASTWEETS_DIR . "templates/{$file_name}";
 
-		<blockquote>
-			<?php echo str_replace( [ '>http://', '>https://' ], [ '>', '>' ], make_clickable( $tweet->text ) ); ?>
-		</blockquote>
+	// Find our template file in theme/child-theme or fallback to plugin template file.
+	$template_file_path = locate_template( $theme_template_file_path, false );
+	$template_file_path = ( ! empty( $template_file_path ) ) ? $template_file_path : $plugin_template_file_path;
 
-		<footer>
-			<a target="_blank" rel="nofollow" href="<?php echo esc_url( $tweet->url ); ?>">
-				<span><i class="fas fa-retweet"></i> <?php echo $tweet->retweets_count; ?></span>
-				<span><i class="fas fa-heart"></i> <?php echo $tweet->favorites_count; ?></span>
-			</a>
-		</footer>
-	</div>
-	<?php
+	if ( ! file_exists( $template_file_path ) ) {
+		return;
+	}
+
+	include $template_file_path;
+}
+
+/**
+ * Refactor a tweet object coming from API.
+ *
+ * @param object $tweet
+ * @return object $tweet
+ */
+function refactor_tweet_object( $tweet ) {
+	if ( isset( $tweet->retweeted_status->id ) ) {
+		$tweet_object = $tweet->retweeted_status;
+	} else {
+		$tweet_object = $tweet;
+	}
+
+	return (object) [
+		'id'              => $tweet_object->id,
+		'url'             => "https://twitter.com/{$tweet_object->user->screen_name}/status/{$tweet_object->id}",
+		'date'            => strtotime( $tweet_object->created_at ),
+		'text'            => enhance_tweet_text( $tweet_object->full_text ),
+		'retweets_count'  => $tweet_object->retweet_count,
+		'favorites_count' => $tweet_object->favorite_count,
+		'user'            => (object) [
+			'name'        => $tweet_object->user->name,
+			'screen_name' => $tweet_object->user->screen_name,
+			'avatar'      => $tweet_object->user->profile_image_url_https,
+			'url'         => "https://twitter.com/{$tweet_object->user->screen_name}",
+		],
+	];
+}
+
+/**
+ * Enhance tweet text by making links and hashtags clickable
+ *
+ * @param string $text Tweet text content
+ * @return string $text Enhanced tweet text content
+ */
+function enhance_tweet_text( $text ) {
+	$text = preg_replace( '/#+([a-zA-ZÀ-ÖØ-öø-ÿ0-9_]+)/', '<a target="_blank" rel="nofollow" href="https://twitter.com/search?q=$1">$0</a>', $text );
+	$text = preg_replace( '/@+([a-zA-Z0-9_]+)/', '<a target="_blank" rel="nofollow" href="https://twitter.com/$1">$0</a>', $text );
+	$text = str_replace( [ '>http://', '>https://' ], [ '>', '>' ], make_clickable( $text ) );
+	return $text;
 }

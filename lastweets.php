@@ -23,7 +23,6 @@ define( 'LASTWEETS_URL', plugin_dir_url( __FILE__ ) );
 define( 'LASTWEETS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LASTWEETS_PLUGIN_DIRNAME', basename( rtrim( dirname( __FILE__ ), '/' ) ) );
 define( 'LASTWEETS_BASENAME', plugin_basename( __FILE__ ) );
-define( 'LASTWEETS_VIEWS_DIR', LASTWEETS_DIR . 'views/' );
 
 /**
  * Load our Composer dependencies
