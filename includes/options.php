@@ -106,3 +106,19 @@ function display_content_after_sidebar() {
 function get( $option_name ) {
 	return \carbon_get_theme_option( $option_name );
 }
+
+/**
+ * Set default options when activating the plugin
+ */
+function set_default_options() {
+	$load_css    = get_option( '_lastweets_load_css', null );
+	$fetch_every = get_option( '_lastweets_fetch_every', null );
+
+	if ( is_null( $load_css ) ) {
+		update_option( '_lastweets_load_css', 'yes' );
+	}
+
+	if ( is_null( $fetch_every ) ) {
+		update_option( '_lastweets_fetch_every', 30 );
+	}
+}

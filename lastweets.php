@@ -39,13 +39,25 @@ add_action( 'after_setup_theme', __NAMESPACE__ . '\\load_dependencies' );
 load_plugin_textdomain( 'lastweets', false, LASTWEETS_PLUGIN_DIRNAME . '/languages/' );
 
 /**
+ * Installation function to do some required things.
+ *
+ * @return void
+ */
+function install() {
+	require_once LASTWEETS_DIR . 'includes/options.php';
+	\Lastweets\Options\set_default_options();
+}
+register_activation_hook( __FILE__, 'Lastweets\\install' );
+
+
+/**
  * Register required files.
  */
 function fire() {
 	$files = [ 'utils', 'functions', 'api', 'assets', 'options', 'gutenblock' ];
 
 	foreach ( $files as $file ) {
-		require_once LASTWEETS_DIR . "/includes/{$file}.php";
+		require_once LASTWEETS_DIR . "includes/{$file}.php";
 	}
 }
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\fire' );
