@@ -1,3 +1,5 @@
+### lastweets/disable_default_css_loading
+
 ### lastweets/custom_theme_path
 
 ### lastweets/before_display_oembed

@@ -9,8 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Enqueue scripts and styles
  */
-function enqueue_assets( $hook ) {
-	// wp_enqueue_script( 'lastweets/global', LASTWEETS_URL . 'assets/js/global.js', [ 'jquery', 'lib/flatpickr' ], LASTWEETS_VERSION );
-	// wp_enqueue_style( 'lastweets/global', LASTWEETS_URL . 'assets/css/global.css', [], LASTWEETS_VERSION );
+function enqueue_assets() {
+	if ( ! \Lastweets\Options\get( 'lastweets_load_css' ) || apply_filters( 'lastweets/disable_default_css_loading', false ) ) {
+		return;
+	}
+
+	wp_enqueue_style( 'lastweets/theme', LASTWEETS_URL . 'assets/css/theme.css', [], LASTWEETS_VERSION );
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_assets' );
