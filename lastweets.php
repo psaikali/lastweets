@@ -49,7 +49,6 @@ function install() {
 }
 register_activation_hook( __FILE__, 'Lastweets\\install' );
 
-
 /**
  * Register required files.
  */

@@ -40,6 +40,16 @@ add_action( 'carbon_fields_register_fields', __NAMESPACE__ . '\\register_gutenbl
  * @return array $fields Array of new CF fields
  */
 function add_core_gutenblock_fields( $fields = [] ) {
+	if ( ! \Lastweets\Api\api_keys_are_defined() ) {
+		$warning = sprintf(
+			__( '<strong>Your API keys are not defined</strong> so the plugin will not be able to fetch your tweets. Head to <a href="%1$s">the plugin settings page to fix</a> this.', 'lastweets' ),
+			admin_url( 'options-general.php?page=lastweets' )
+		);
+
+		$warning  = '<div style="padding:.5rem; background: #efcccf; font-size: .75rem; font-style:italic;">' . $warning . '</div>';
+		$fields[] = Field::make( 'html', 'no_key_defined', __( 'Warning!', 'lastweets' ) )->set_html( $warning );
+	}
+
 	$fields[] = Field::make( 'text', 'account', __( 'Twitter account', 'lastweets' ) )->set_attribute( 'placeholder', '@psaikali' )->set_width( 60 )->set_required();
 	$fields[] = Field::make( 'text', 'amount', __( 'Number of tweets', 'lastweets' ) )->set_attribute( 'type', 'number' )->set_attribute( 'placeholder', 5 )->set_width( 40 )->set_required();
 	$fields[] = Field::make( 'select', 'style', __( 'Appearance', 'lastweets' ) )->set_options(
