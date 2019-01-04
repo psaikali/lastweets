@@ -122,3 +122,23 @@ function set_default_options() {
 		update_option( '_lastweets_fetch_every', 30 );
 	}
 }
+
+/**
+ * Output the Settings link on the Plugins admin page
+ *
+ * @param array $links A list of existing links.
+ * @return array A new list of links.
+ */
+function plugin_settings_link( $links ) {
+	$settings_url = admin_url( 'options-general.php?page=lastweets' );
+	$settings_link_tag = sprintf(
+		'<a href="%1$s">%2$s</a>',
+		esc_url( $settings_url ),
+		__( 'Settings', 'lastweets' )
+	);
+
+	array_unshift( $links, $settings_link_tag );
+
+	return $links;
+}
+add_filter( 'plugin_action_links_' . LASTWEETS_BASENAME, __NAMESPACE__ . '\\plugin_settings_link' );

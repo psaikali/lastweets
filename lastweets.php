@@ -4,7 +4,7 @@
  * Description: Display a Twitter account latest tweets.
  * Author: Pierre Saïkali
  * Author URI: https://saika.li
- * Text Domain: lastweet
+ * Text Domain: lastweets
  * Domain Path: /languages/
  * Version: 1.0.0
  */
