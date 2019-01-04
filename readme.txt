@@ -35,11 +35,9 @@ Go to https://developer.twitter.com/en/apps to create a Twitter application and 
 
 == Screenshots ==
 
-1. Example of a timeline created with this plugin.
-2. Managing different timelines is simple!
-3. Every single timeline achievement is a unique post categorized in one or multiple timelines.
-4. You can add timelines directly within the brand new Gutenberg block editor.
-5. Plugin options page.
+1. The plugin options page: it's necessary to define your Twitter app API keys in there!
+2. The Gutenberg block lets you display tweets on any page.
+3. Tweets displayed on the front-end with custom theme or oEmbed display setting.
  
 == Changelog ==
  

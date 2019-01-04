@@ -93,9 +93,51 @@ add_filter( 'lastweets/options_fields_tab_theme', __NAMESPACE__ . '\\options_the
  */
 function display_content_after_sidebar() {
 	?>
+	<style>
+		#lastweets-promo-box {
+			background: #fff;
+			border:1px solid #DADADA;
+			padding:2rem;
+			border-radius:5px;
+			text-align: center;
+		}
+
+		#lastweets-promo-box h2 {
+			font-size: 3rem;
+			margin:0;
+		}
+
+		#lastweets-promo-box cite, #lastweets-promo-box .cite {
+			font-style: italic;
+		}
+
+		#lastweets-promo-box hr {
+			margin: 2rem 0;
+		}
+
+		#lastweets-promo-box footer {
+			
+		}
+	</style>
+
+	<div id="lastweets-promo-box" class="wp-core-ui">
+		<h2>ℹ</h2>
+		<h3><?php _e( 'Questions? Ideas?', 'lastweets' ); ?></h3>
+		<p><?php _e( 'Feel free to use the plugin WordPress.org forum or GitHub repository issues tracker to ask for help or share ideas and suggestions.', 'lastweets' ); ?></p>
+		<p><?php _e( 'I\'d be happy to help you out!', 'lastweets' ); ?></p>
+		<ul>
+			<li><a href="https://wordpress.org/support/plugin/lastweets" target="_blank"><?php _e( 'WordPress.org forum', 'lastweets' ); ?></a></li>
+			<li><a href="https://github.com/psaikali/lastweets/issues" target="_blank"><?php _e( 'GitHub issues tracker', 'lastweets' ); ?></a></li>
+		</ul>
+		<p class="cite"><cite><a href="https://saika.li">— Pierre</a></cite></p>
+		<hr>
+		<footer>
+			<p><a href="https://wordpress.org/support/plugin/lastweets/reviews/#new-post" target="_blank" class="button"><span class="dashicons dashicons-star-filled"></span> <?php _e( 'Leave a review', 'lastweets' ); ?></a></p>
+		</footer>
+	</div>
 	<?php
 }
-//add_action( 'carbon_fields_container_lastweets_after_sidebar', __NAMESPACE__ . '\\display_content_after_sidebar' );
+add_action( 'carbon_fields_container_lastweets_after_sidebar', __NAMESPACE__ . '\\display_content_after_sidebar' );
 
 /**
  * Get option value.
